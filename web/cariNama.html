@@ -88,7 +88,7 @@ and open the template in the editor.
         <script>
 
             function cariPasien() {
-                localStorage.setItem("x", "33101");
+
                 var xmlhttp = new XMLHttpRequest();
                 var url = "http://206.189.38.188:8080/myrs/webresources/pasien/cariNamaPasien?nama=" + cariNama.value;
                 xmlhttp.onreadystatechange = function () {
@@ -108,21 +108,22 @@ and open the template in the editor.
                                 arr[i].nik +
                                 "</td><td>" +
                                 arr[i].nama +
-                                "</td><td>" + 
+                                "</td><td>" +
                                 arr[i].tanggalLahir +
                                 "</td><td>" +
-                                 "<button type='submit'>Detail</button>" +
+                                "<button type='submit'>Detail</button>" +
                                 "</td></tr>";
+                        var simpan = arr[i].nik;
                     }
                     out += "</table>";
-                    
+                    localStorage.setItem("x", simpan);
                     document.getElementById("tampilPasien").innerHTML = out;
                 }
-                
+
             }
-            
-            
-            
+
+
+
         </script>
 
     </body>

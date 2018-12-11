@@ -70,7 +70,8 @@ and open the template in the editor.
 
                     <div class="col-md-6 col-sm-6">
                         <!-- CONTACT FORM HERE -->
-                        <form id="appointment-form" role="form" >
+                        <form id="appointment-form" role="form">
+                            <button onclick="load()">refresh</button>
                             <div id="tampil" class="smoothScroll"></div>
                         </form>
                     </div>
@@ -81,44 +82,43 @@ and open the template in the editor.
 
 
         <script>
+            function load() {
+                var x = localStorage.x;
+                var xmlhttp = new XMLHttpRequest();
+                var url = "http://206.189.38.188:8080/myrs/webresources/pasien/cariPasien?nik=" +x;
+                xmlhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        myFunction(this.responseText);
+                    }
+                }
+                xmlhttp.open("GET", url, true);
+                xmlhttp.send();
+                function myFunction(response) {
+                    var arr = JSON.parse(response);
+                    var i;
+                    var out = "<table border='1'>";
+                    var out = "<table style='width:50%' ><tr><th>No RM</th><th>Nama</th><th>Alamat</th><th>NIK</th><th>Tanggal Lahir</th><th>Kelamin</th></tr>"
+                    for (i = 0; i < arr.length; i++) {
+                        out += "<tr><td>" +
+                                arr[i].noRm +
+                                "</td><td>" +
+                                arr[i].nama +
+                                "</td><td>" +
+                                arr[i].alamat +
+                                "</td><td>" +
+                                arr[i].nik +
+                                "</td><td>" +
+                                arr[i].tanggalLahir +
+                                "</td><td>" +
+                                arr[i].kelamin +
+                                "</td></tr>";
+                    }
+                    out += "</table>";
 
+                    document.getElementById("tampil").innerHTML = out;
 
-            var x = localStorage.x;
-            var xmlhttp = new XMLHttpRequest();
-            var url = "http://206.189.38.188:8080/myrs/webresources/pasien/cariPasien?nik=33101";
-            xmlhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    myFunction(this.responseText);
                 }
             }
-            xmlhttp.open("GET", url, true);
-            xmlhttp.send();
-            function myFunction(response) {
-                var arr = JSON.parse(response);
-                var i;
-                var out = "<table border='1'>";
-                var out = "<table style='width:50%' ><tr><th>Nik</th><th>Nama</th><th>Tanggal Lahir</th><th>Detail</th></tr>"
-                for (i = 0; i < arr.length; i++) {
-                    out += "<tr><td>" +
-                            arr[i].noRm +
-                            "</td><td>" +
-                            arr[i].nama +
-                            "</td><td>" +
-                            arr[i].alamat +
-                            "</td><td>" +
-                            arr[i].nik +
-                            "</td><td>" +
-                            arr[i].tanggalLahir +
-                            "</td><td>" +
-                            arr[i].kelamin +
-                            "</td></tr>";
-                }
-                out += "</table>";
-
-                document.getElementById("tampil").innerHTML = out;
-
-            }
-
         </script>
 
     </body>

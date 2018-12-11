@@ -1,16 +1,129 @@
-<!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
+To change this template, choose Tools | Templates
 and open the template in the editor.
 -->
+<!DOCTYPE html>
 <html>
+
     <head>
-        <title>TODO supply a title</title>
+        <title>Rumah Sakitku</title>
+
+        <style>
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding-top: 12px;
+                padding-bottom: 12px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #a5c422;
+                border-radius: 3px;
+                color: #ffffff;
+                font-weight: 600;
+
+            }
+        </style>
+
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="author" content="Tooplate">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/animate.css">
+        <link rel="stylesheet" href="css/owl.carousel.css">
+        <link rel="stylesheet" href="css/owl.theme.default.min.css">
+
+        <!-- MAIN CSS -->
+        <link rel="stylesheet" href="css/tooplate-style.css">
+
+
     </head>
     <body>
-        <div>TODO write content</div>
+        <header>
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-4 col-sm-5">
+                        <p>Selamat datang di Pusat Kesehatan Profesional</p>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+
+
+        <!-- MAKE AN APPOINTMENT -->
+        <section id="appointment" data-stellar-background-ratio="3">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-6 col-sm-6">
+                        <button onclick="cariPasien()">Cari Pasien</button>
+                        <input id="cariNama" placeholder="Masukan nama pasien">
+                    </div>
+
+                    <div class="col-md-6 col-sm-6">
+                        <!-- CONTACT FORM HERE -->
+                        <form id="appointment-form" role="form" action="detilPasien.html" method="post">
+                            <div id="tampilPasien" class="smoothScroll"></div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <script>
+
+            function cariPasien() {
+                localStorage.setItem("x", "33101");
+                var xmlhttp = new XMLHttpRequest();
+                var url = "http://206.189.38.188:8080/myrs/webresources/pasien/cariNamaPasien?nama=" + cariNama.value;
+                xmlhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        myFunction(this.responseText);
+                    }
+                }
+                xmlhttp.open("GET", url, true);
+                xmlhttp.send();
+                function myFunction(response) {
+                    var arr = JSON.parse(response);
+                    var i;
+                    var out = "<table border='1'";
+                    var out = "<table style='width:50%' ><tr><th>Nik</th><th>Nama</th><th>Tanggal Lahir</th><th>Detail</th></tr>"
+                    for (i = 0; i < arr.length; i++) {
+                        out += "<tr><td>" +
+                                arr[i].nik +
+                                "</td><td>" +
+                                arr[i].nama +
+                                "</td><td>" + 
+                                arr[i].tanggalLahir +
+                                "</td><td>" +
+                                 "<button type='submit'>Detail</button>" +
+                                "</td></tr>";
+                    }
+                    out += "</table>";
+                    
+                    document.getElementById("tampilPasien").innerHTML = out;
+                }
+                
+            }
+            
+            
+            
+        </script>
+
     </body>
 </html>
